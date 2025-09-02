@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Segunda Guerra Mundial — Caderno Ilustrado</title>
+  <meta name="description" content="Site em uma única página com textos introdutórios e desenhos vetoriais sobre a Segunda Guerra Mundial (1939–1945)." />
+  <style>
+    :root{
+      --bg:#0e1014;           /* fundo escuro neutro, leitura confortável */
+      --paper:#12151b;        /* cartões */
+      --ink:#e6e6e6;          /* texto */
+      --muted:#b9c0c7;        /* subtítulos */
+      --accent:#97b4ff;       /* links */
+      --accent-2:#ffd16b;     /* destaque */
+      --border:#2a2f3a;
+    }
+
+    /* Modo claro opcional */
+    .light{
+      --bg:#fafbff;
+      --paper:#ffffff;
+      --ink:#1c2026;
+      --muted:#344050;
+      --accent:#2d5bff;
+      --accent-2:#9c6d00;
+      --border:#e6e9ef;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font: 16px/1.6 ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      background:var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0)), var(--paper);
+      backdrop-filter:saturate(150%) blur(6px);
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:1050px;margin:0 auto;padding:16px}
+    .brand{
+      display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    }
+    .brand h1{margin:0;font-size:clamp(22px,2.8vw,32px);letter-spacing:.5px}
+    .brand small{color:var(--muted)}
+
+    nav.toc{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px
+    }
+    nav.toc a{
+      text-decoration:none;color:var(--ink);border:1px solid var(--border);
+      background:var(--paper);padding:8px 12px;border-radius:999px;
+    }
+    nav.toc a:hover{border-color:var(--accent);color:var(--accent)}
+
+    .grid{display:grid;gap:18px;margin:24px auto}
+    @media(min-width:800px){.grid{grid-template-columns:1fr 320px}}
+
+    article{background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:20px}
+    article h2{margin-top:0;font-size:clamp(20px,2.5vw,28px)}
+    article h3{margin-top:26px;color:var(--muted)}
+    p{margin:12px 0}
+    figure{margin:0;}
+    figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+
+    .aside{position:sticky;top:88px;height:fit-content}
+    .card{background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:16px}
+    .card+ .card{margin-top:16px}
+
+    .badge{font-size:12px;color:var(--paper);background:var(--accent);padding:2px 8px;border-radius:6px}
+
+    a{color:var(--accent)}
+    .mark{background:linear-gradient( to top, rgba(255,209,107,.28), rgba(255,209,107,0) 60%)}
+
+    footer{border-top:1px solid var(--border);color:var(--muted);padding:28px 16px;margin-top:24px}
+
+    /* Ilustrações SVG em estilo "desenho" */
+    .sketch{display:block;width:100%;height:auto;max-height:240px}
+    .stroke{stroke:#cfd6de;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .hatch{stroke:#7f8a99;stroke-width:1.2;opacity:.6}
+
+    /* Botões utilitários */
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    button{
+      background:var(--paper);color:var(--ink);border:1px solid var(--border);
+      padding:8px 12px;border-radius:10px;cursor:pointer
+    }
+    button:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* Tabela cronológica */
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{border:1px solid var(--border);padding:10px;text-align:left}
+    th{background:rgba(255,255,255,.03)}
+
+    /* Acessibilidade e impressão */
+    :focus-visible{outline:2px dashed var(--accent);outline-offset:2px}
+    @media print{
+      header, .toolbar, nav.toc, .aside{display:none}
+      body{background:white;color:black}
+      article{border:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <svg class="sketch" viewBox="0 0 600 120" style="max-height:68px">
+          <!-- Título em letras delineadas (estilo pôster WWII) -->
+          <text x="16" y="78" font-family="Impact, Haettenschweiler, 'Arial Black', sans-serif" font-size="64" fill="none" stroke="#e6e6e6" stroke-width="3">SEGUNDA GUERRA</text>
+          <text x="18" y="112" font-family="Impact, Haettenschweiler, 'Arial Black', sans-serif" font-size="28" fill="none" stroke="#97b4ff" stroke-width="2">caderno ilustrado</text>
+        </svg>
+        <div>
+          <h1 style="margin:0">Segunda Guerra Mundial</h1>
+          <small>1939 — 1945 • visão geral, cronologia, pessoas e tecnologia</small>
+          <div class="toolbar">
+            <button id="toggle-theme" aria-pressed="false" aria-label="Alternar tema claro/escuro">Alternar tema</button>
+            <button id="print" aria-label="Imprimir">Imprimir</button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="toc" aria-label="Navegação de seções">
+        <a href="#intro">Introdução</a>
+        <a href="#cronologia">Cronologia</a>
+        <a href="#frentes">Frentes de batalha</a>
+        <a href="#tecnologia">Tecnologia</a>
+        <a href="#vidas">Vidas na guerra</a>
+        <a href="#galeria">Galeria de desenhos</a>
+        <a href="#leitura">Leituras sugeridas</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap grid">
+    <article id="intro" aria-labelledby="h-intro">
+      <h2 id="h-intro">Introdução</h2>
+      <p>
+        A <span class="mark">Segunda Guerra Mundial</span> (1939–1945) foi um conflito global envolvendo dezenas de países e
+        todos os continentes habitados. Começou com a invasão da Polônia pela Alemanha nazista e terminou com a capitulação do Eixo em 1945.
+        Foi marcada por avanços tecnológicos, mobilização total de sociedades e consequências humanas imensas.
+      </p>
+      <figure>
+        <!-- Desenho: capacete e olive branch -->
+        <svg class="sketch" viewBox="0 0 600 240" role="img" aria-label="Desenho de capacete militar e um ramo de oliveira">
+          <path class="stroke" d="M120 150c10-40 50-62 96-62s86 22 96 62c0 0-36 12-96 12s-96-12-96-12z"/>
+          <path class="hatch" d="M164 110l12 18M184 106l14 22M206 104l14 24M228 104l14 24M250 106l14 22"/>
+          <path class="stroke" d="M340 165c28 0 52 19 70 40 18-21 42-40 70-40"/>
+          <path class="stroke" d="M380 170c10 8 18 17 30 35M430 170c-10 8-18 17-30 35"/>
+          <circle class="stroke" cx="218" cy="124" r="8"/>
+        </svg>
+        <figcaption>Entre o capacete e o ramo de oliveira: guerra e paz em tensão constante.</figcaption>
+      </figure>
+      <p>Este site é um material introdutório e ilustrado — não pretende esgotar o tema. Use as seções abaixo para explorar.</p>
+    </article>
+
+    <aside class="aside" aria-label="Resumo rápido">
+      <div class="card">
+        <strong>Período:</strong> 1º de setembro de 1939 — 2 de setembro de 1945
+        <div style="margin-top:6px"><span class="badge">Contexto</span></div>
+        <ul>
+          <li>Ascensão de regimes totalitários;</li>
+          <li>Crise econômica pós-1929;</li>
+          <li>Revisões territoriais e expansionismo.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Blocos</strong>
+        <ul>
+          <li><em>Aliados</em>: Reino Unido, União Soviética, EUA e outros.</li>
+          <li><em>Eixo</em>: Alemanha, Itália, Japão e aliados regionais.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <strong>Conceitos-chave</strong>
+        <ul>
+          <li>Guerra total</li>
+          <li>Frentes múltiplas</li>
+          <li>Tecnologia e logística</li>
+        </ul>
+      </div>
+    </aside>
+
+    <article id="cronologia" aria-labelledby="h-crono">
+      <h2 id="h-crono">Cronologia essencial</h2>
+      <p>Uma linha do tempo concisa com marcos do conflito.</p>
+      <table>
+        <thead>
+          <tr><th>Ano</th><th>Evento</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1939</td><td>Invasão da Polônia pela Alemanha; Reino Unido e França declaram guerra.</td></tr>
+          <tr><td>1940</td><td>Queda da França; Batalha da Grã-Bretanha.</td></tr>
+          <tr><td>1941</td><td>Operação Barbarossa (invasão da URSS); ataque a Pearl Harbor e entrada dos EUA.</td></tr>
+          <tr><td>1942</td><td>Guadalcanal no Pacífico; Stalingrado começa no Leste.</td></tr>
+          <tr><td>1943</td><td>Derrota alemã em Stalingrado; rendição italiana; Kursk.</td></tr>
+          <tr><td>1944</td><td>Dia D (Normandia); libertação de Paris.</td></tr>
+          <tr><td>1945</td><td>Queda de Berlim; rendição alemã; bombardeios atômicos no Japão e rendição.</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article id="frentes" aria-labelledby="h-frentes">
+      <h2 id="h-frentes">Frentes de batalha</h2>
+      <h3>Europa Ocidental</h3>
+      <p>Campanhas relâmpago, ocupações, resistência e a invasão aliada pela Normandia em 1944.</p>
+      <h3>Frente Oriental</h3>
+      <p>O maior teatro terrestre: cerco, batalhas monumentais como Stalingrado e Kursk, altos custos humanos.</p>
+      <h3>Pacífico</h3>
+      <p>Guerra aeronaval, ilhas estratégicas, porta-aviões e combates anfíbios; culmina com a rendição japonesa em 1945.</p>
+      <figure>
+        <!-- Desenho: silhueta de tanque e aviões -->
+        <svg class="sketch" viewBox="0 0 600 220" role="img" aria-label="Tanque e aviões desenhados em traço">
+          <path class="stroke" d="M60 170h420l-18-24H120z"/>
+          <rect class="stroke" x="150" y="140" width="180" height="26" rx="6"/>
+          <rect class="stroke" x="190" y="126" width="90" height="18" rx="4"/>
+          <path class="stroke" d="M280 132h80"/>
+          <circle class="stroke" cx="180" cy="172" r="16"/>
+          <circle class="stroke" cx="260" cy="172" r="16"/>
+          <circle class="stroke" cx="340" cy="172" r="16"/>
+          <path class="hatch" d="M160 146l22 10M210 146l22 10M260 146l22 10M310 146l22 10"/>
+          <path class="stroke" d="M420 60l26 10-10 10-26-10zM458 72l30 12-12 10-30-12zM380 48l24 10-10 10-24-10z"/>
+        </svg>
+        <figcaption>Tanques e aeronaves redefiniram mobilidade e alcance do conflito.</figcaption>
+      </figure>
+    </article>
+
+    <article id="tecnologia" aria-labelledby="h-tech">
+      <h2 id="h-tech">Tecnologia e logística</h2>
+      <ul>
+        <li><strong>Criptografia & inteligência:</strong> quebras de códigos e máquinas eletromecânicas.</li>
+        <li><strong>Aviação:</strong> bombardeiros estratégicos, radares e porta-aviões.</li>
+        <li><strong>Blindados:</strong> doutrina de armas combinadas, logística de combustível e peças.</li>
+        <li><strong>Ciência:</strong> projetos que aceleraram pesquisa em materiais, medicina e energia.</li>
+      </ul>
+      <figure>
+        <!-- Desenho: rádio e mapa com rotas -->
+        <svg class="sketch" viewBox="0 0 600 220" role="img" aria-label="Rádio antigo e mapa com rotas">
+          <rect class="stroke" x="80" y="80" width="160" height="90" rx="10"/>
+          <circle class="stroke" cx="120" cy="125" r="16"/>
+          <circle class="stroke" cx="160" cy="125" r="16"/>
+          <rect class="stroke" x="200" y="108" width="24" height="34" rx="4"/>
+          <path class="stroke" d="M320 160c40-40 80-40 120 0M320 100c40 40 80 40 120 0"/>
+          <path class="hatch" d="M340 120l20 20M360 100l20 20M380 80l20 20M400 100l20 20"/>
+        </svg>
+        <figcaption>Comunicações, radar e rotas logísticas foram decisivos para o esforço de guerra.</figcaption>
+      </figure>
+    </article>
+
+    <article id="vidas" aria-labelledby="h-vidas">
+      <h2 id="h-vidas">Vidas na guerra</h2>
+      <p>
+        Por trás das estratégias e máquinas, havia pessoas: combatentes, civis, trabalhadores e vítimas. Este recorte lembra que a
+        experiência humana é central para entender o conflito.
+      </p>
+      <ul>
+        <li><strong>Soldados:</strong> treinamento, disciplina, medo e camaradagem.</li>
+        <li><strong>Frente doméstica:</strong> racionamento, indústria e propaganda.</li>
+        <li><strong>Deslocados e vítimas:</strong> custos humanos devastadores em várias regiões.</li>
+      </ul>
+      <figure>
+        <!-- Desenho: perfis de soldados e arame farpado -->
+        <svg class="sketch" viewBox="0 0 600 220" role="img" aria-label="Perfis de soldados e arame farpado">
+          <path class="stroke" d="M120 160c0-40 20-70 50-70s50 30 50 70"/>
+          <path class="stroke" d="M260 160c0-36 18-64 46-64s46 28 46 64"/>
+          <path class="stroke" d="M80 180h440"/>
+          <path class="stroke" d="M100 180l10-10 10 10 10-10 10 10"/>
+          <path class="stroke" d="M380 180l10-10 10 10 10-10 10 10"/>
+        </svg>
+        <figcaption>Silhuetas e arame farpado: símbolos da presença humana e das fronteiras da guerra.</figcaption>
+      </figure>
+    </article>
+
+    <article id="galeria" aria-labelledby="h-galeria">
+      <h2 id="h-galeria">Galeria de desenhos (SVG)</h2>
+      <p>Clique para alternar os traços e ver o efeito “esboço”.</p>
+      <div class="toolbar"><button id="toggle-hatch">Alternar hachuras</button></div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        <figure class="card">
+          <svg class="sketch" viewBox="0 0 600 240" role="img" aria-label="Soldado marchando com mochila">
+            <path class="stroke" d="M160 170c0-40 22-72 52-72s52 32 52 72"/>
+            <path class="stroke" d="M212 98l30 24-12 18-30-24z"/>
+            <path class="hatch" d="M170 140l20 10M190 150l20 10M210 160l20 10"/>
+            <path class="stroke" d="M150 176h140"/>
+          </svg>
+          <figcaption>Soldado com mochila — passo contido, olhar adiante.</figcaption>
+        </figure>
+        <figure class="card">
+          <svg class="sketch" viewBox="0 0 600 240" role="img" aria-label="Navio e ondas">
+            <path class="stroke" d="M100 150h220l-20-26H120z"/>
+            <path class="stroke" d="M90 170c40 10 80 10 120 0 40 10 80 10 120 0"/>
+            <path class="hatch" d="M110 154l20 8M150 154l20 8M190 154l20 8"/>
+          </svg>
+          <figcaption>Navio de desembarque — logística em movimento.</figcaption>
+        </figure>
+        <figure class="card">
+          <svg class="sketch" viewBox="0 0 600 240" role="img" aria-label="Avião em voo">
+            <path class="stroke" d="M120 120h220l40-10-40-10H120z"/>
+            <path class="hatch" d="M160 118l30 0M220 118l30 0M280 118l30 0"/>
+            <circle class="stroke" cx="320" cy="110" r="6"/>
+          </svg>
+          <figcaption>Aeronave — domínio do ar como fator decisivo.</figcaption>
+        </figure>
+        <figure class="card">
+          <svg class="sketch" viewBox="0 0 600 240" role="img" aria-label="Ambulância com cruz">
+            <rect class="stroke" x="110" y="120" width="200" height="70" rx="8"/>
+            <circle class="stroke" cx="150" cy="193" r="14"/>
+            <circle class="stroke" cx="250" cy="193" r="14"/>
+            <path class="stroke" d="M190 140h30M205 125v30"/>
+          </svg>
+          <figcaption>Ambulância — cuidado e evacuação sob risco.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article id="leitura" aria-labelledby="h-leitura">
+      <h2 id="h-leitura">Leituras e estudos sugeridos</h2>
+      <p>Para aprofundar, procure por fontes acadêmicas, museus e documentos oficiais. Você pode acrescentar aqui seus livros, filmes e links preferidos.</p>
+      <ul>
+        <li>Histórias gerais do conflito e de seus teatros regionais.</li>
+        <li>Memórias e diários de participantes.</li>
+        <li>Estudos sobre tecnologia, logística e economia de guerra.</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <p>Site educativo, com desenhos vetoriais feitos em SVG para permanecer tudo em um único arquivo. Você pode editar os textos livremente.</p>
+  </footer>
+
+  <script>
+    // Alternar tema claro/escuro
+    const btnTheme = document.getElementById('toggle-theme');
+    btnTheme?.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const pressed = btnTheme.getAttribute('aria-pressed') === 'true';
+      btnTheme.setAttribute('aria-pressed', String(!pressed));
+    });
+
+    // Imprimir
+    document.getElementById('print')?.addEventListener('click', () => window.print());
+
+    // Alternar hachuras das ilustrações
+    const btnHatch = document.getElementById('toggle-hatch');
+    btnHatch?.addEventListener('click', () => {
+      document.querySelectorAll('.hatch').forEach(el => {
+        el.style.display = (el.style.display === 'none') ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
